@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+
+    <title>Deploying a multi-container application to Azure Kubernetes Services</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css%3Fv=180df20899.css" />
+
+    <link rel="icon" href="../content/images/size/w256h256/format/jpeg/2022/11/pexels-alex-knight-2599244-1.jpg" type="image/jpeg" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="dueresist Tech Space" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Deploying a multi-container application to Azure Kubernetes Services" />
+    <meta property="og:description" content="Azure Kubernetes Service (AKS) is the quickest way to use Kubernetes on Azure. Azure Kubernetes Service (AKS) manages your hosted Kubernetes environment, making it quick and easy to deploy and manage containerized applications without container orchestration expertise. It also eliminates the burden of ongoing operations and maintenance by provisioning, upgrading," />
+    <meta property="og:url" content="http://localhost:2368/deploying-a-multi-container-application-to-azure-kubernetes-services/" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;2000" />
+    <meta property="article:published_time" content="2022-11-22T15:19:32.000Z" />
+    <meta property="article:modified_time" content="2022-11-22T15:40:17.000Z" />
+    <meta property="article:publisher" content="https://www.facebook.com/ghost" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Deploying a multi-container application to Azure Kubernetes Services" />
+    <meta name="twitter:description" content="Azure Kubernetes Service (AKS) is the quickest way to use Kubernetes on Azure. Azure Kubernetes Service (AKS) manages your hosted Kubernetes environment, making it quick and easy to deploy and manage containerized applications without container orchestration expertise. It also eliminates the burden of ongoing operations and maintenance by provisioning, upgrading," />
+    <meta name="twitter:url" content="http://localhost:2368/deploying-a-multi-container-application-to-azure-kubernetes-services/" />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;2000" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="aduda" />
+    <meta name="twitter:site" content="@aduda_shem" />
+    <meta name="twitter:creator" content="@aduda_shem" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "dueresist Tech Space",
+        "url": "http://localhost:2368/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2022/11/logo-1.webp"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "aduda",
+        "url": "http://localhost:2368/author/aduda/",
+        "sameAs": [
+            "https://www.linkedin.com/in/shem-aduda/",
+            "https://twitter.com/aduda_shem"
+        ]
+    },
+    "headline": "Deploying a multi-container application to Azure Kubernetes Services",
+    "url": "http://localhost:2368/deploying-a-multi-container-application-to-azure-kubernetes-services/",
+    "datePublished": "2022-11-22T15:19:32.000Z",
+    "dateModified": "2022-11-22T15:40:17.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&ixlib=rb-4.0.3&q=80&w=2000"
+    },
+    "description": "Azure Kubernetes Service (AKS) is the quickest way to use Kubernetes on Azure. Azure Kubernetes Service (AKS) manages your hosted Kubernetes environment, making it quick and easy to deploy and manage containerized applications without container orchestration expertise. It also eliminates the burden of ongoing operations and maintenance by provisioning, upgrading, and scaling resources on demand, without taking your applications offline. Azure DevOps helps in creating Docker images for faster dep",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 5.23" />
+    <link rel="alternate" type="application/rss+xml" title="dueresist Tech Space" href="../rss/index.html" />
+    
+    <script defer src="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/sodo-search.min.js" data-key="d4156397966cbb497b4557b73e" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.1/umd/main.css" data-sodo-search="http://localhost:2368/" crossorigin="anonymous"></script>
+    <script defer src="../public/cards.min.js%3Fv=180df20899"></script><style>:root {--ghost-accent-color: #1e0a12;}</style>
+    <link rel="stylesheet" type="text/css" href="../public/cards.min.css%3Fv=180df20899.css">
+
+</head>
+<body class="post-template is-head-middle-logo has-serif-title has-cover">
+<div class="viewport">
+
+    <header id="gh-head" class="gh-head outer">
+        <div class="gh-head-inner inner">
+            <div class="gh-head-brand">
+                <a class="gh-head-logo" href="../index.html">
+                        <img src="../content/images/2022/11/logo-1.webp" alt="dueresist Tech Space">
+                </a>
+                <button class="gh-search gh-icon-btn" data-ghost-search><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+                <button class="gh-burger"></button>
+            </div>
+
+            <nav class="gh-head-menu">
+                <ul class="nav">
+    <li class="nav-home"><a href="../index.html">Home</a></li>
+    <li class="nav-about"><a href="../about/index.html">About</a></li>
+</ul>
+
+            </nav>
+
+            <div class="gh-head-actions">
+                        <button class="gh-search gh-icon-btn" data-ghost-search><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="site-content">
+        
+
+
+
+<main id="site-main" class="site-main">
+<article class="article post image-small">
+
+    <header class="article-header gh-canvas">
+
+        <div class="article-tag post-card-tags">
+        </div>
+
+        <h1 class="article-title">Deploying a multi-container application to Azure Kubernetes Services</h1>
+
+
+        <div class="article-byline">
+        <section class="article-byline-content">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+                    <a href="../author/aduda/index.html" class="author-avatar author-profile-image"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"/></g></svg>
+</a>
+                </li>
+            </ul>
+
+            <div class="article-byline-meta">
+                <h4 class="author-name"><a href="../author/aduda/index.html">aduda</a></h4>
+                <div class="byline-meta-content">
+                    <time class="byline-meta-date" datetime="2022-11-22">Nov 22, 2022</time>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
+                </div>
+            </div>
+
+        </section>
+        </div>
+
+            <figure class="article-image">
+                <img
+                    srcset="https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;300 300w,
+                            https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;600 600w,
+                            https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;1000 1000w,
+                            https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;2000 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;fit&#x3D;max&amp;fm&#x3D;jpg&amp;ixid&#x3D;MnwxMTc3M3wwfDF8c2VhcmNofDM4fHxjbG91ZCUyMHNlcnZpY2VzfGVufDB8fHx8MTY2OTEzMDI1Mw&amp;ixlib&#x3D;rb-4.0.3&amp;q&#x3D;80&amp;w&#x3D;2000"
+                    alt="Deploying a multi-container application to Azure Kubernetes Services"
+                />
+                    <figcaption>Do More</figcaption>
+            </figure>
+
+    </header>
+
+    <section class="gh-content gh-canvas">
+        <p><a href="https://azure.microsoft.com/en-us/services/kubernetes-service/"><strong>Azure Kubernetes Service (AKS)</strong></a> is the quickest way to use Kubernetes on Azure. <strong>Azure Kubernetes Service (AKS)</strong> manages your hosted Kubernetes environment, making it quick and easy to deploy and manage containerized applications without container orchestration expertise. It also eliminates the burden of ongoing operations and maintenance by provisioning, upgrading, and scaling resources on demand, without taking your applications offline. Azure DevOps helps in creating Docker images for faster deployments and reliability using the continuous build option.</p><h3 id="lab-scenario"><em><strong>Lab Scenario</strong></em></h3><p>This lab uses a Dockerized ASP.NET Core web application - <strong>MyHealthClinic</strong> (MHC) and is deployed to a <strong>Kubernetes</strong> cluster running on <strong>Azure Kubernetes Service (AKS)</strong> using <strong>Azure DevOps</strong>.</p><blockquote>There is a <strong>mhc-aks.yaml</strong> manifest file which consists of definitions to spin up Deployments and Services such as <strong>Load Balancer</strong> in the front and <strong>Redis Cache</strong> in the backend. The MHC application will be running in the mhc-front pod along with the Load Balancer.</blockquote><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/AKS-workflow.gif" class="kg-image" alt loading="lazy" width="1161" height="653" srcset="../content/images/size/w600/2022/11/AKS-workflow.gif 600w, ../content/images/size/w1000/2022/11/AKS-workflow.gif 1000w, ../content/images/2022/11/AKS-workflow.gif 1161w" sizes="(min-width: 720px) 720px"></figure><p>Click the <a href="http://azuredevopsdemogenerator.azurewebsites.net/?TemplateId=77372&amp;Name=AKS">Azure DevOps Demo Generator</a> link and follow the instructions in <a href="https://www.azuredevopslabs.com/labs/vstsextend/Setup/">Getting Started</a> page to provision the project to your <strong>Azure DevOps</strong>.</p><p>For this lab the <strong>Azure Kubernetes Service</strong> template is used which is already selected when you click on the link above. There are some additional extensions required for this lab and can be automatically installed during the process.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/A.png" class="kg-image" alt loading="lazy" width="1362" height="636" srcset="../content/images/size/w600/2022/11/A.png 600w, ../content/images/size/w1000/2022/11/A.png 1000w, ../content/images/2022/11/A.png 1362w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/B.png" class="kg-image" alt loading="lazy" width="1364" height="632" srcset="../content/images/size/w600/2022/11/B.png 600w, ../content/images/size/w1000/2022/11/B.png 1000w, ../content/images/2022/11/B.png 1364w" sizes="(min-width: 720px) 720px"></figure><ol><li>Launch the <a href="https://docs.microsoft.com/en-in/azure/cloud-shell/overview">Azure Cloud Shell</a> from the Azure portal and choose <strong>Bash</strong>.</li></ol><p><strong>Deploy Kubernetes to Azure, using CLI</strong>:</p><p>i. Get the latest available Kubernetes version in your preferred region into a bash variable. Replace <code>&lt;region&gt;</code> with the region of your choosing, "eastus".</p><pre><code>version=$(az aks get-versions -l eastus --query 'orchestrators[-1].orchestratorVersion' -o tsv)
+</code></pre><p>ii. Create a Resource Group</p><pre><code>  az group create --name akshandsonlab --location eastus
+</code></pre><p>iii. Create AKS using the latest version available</p><pre><code> az aks create --resource-group akshandsonlab --name akspwnresist --enable-addons monitoring --kubernetes-version $version --generate-ssh-keys --location eastus</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/C.png" class="kg-image" alt loading="lazy" width="1364" height="502" srcset="../content/images/size/w600/2022/11/C.png 600w, ../content/images/size/w1000/2022/11/C.png 1000w, ../content/images/2022/11/C.png 1364w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/E.png" class="kg-image" alt loading="lazy" width="1366" height="629" srcset="../content/images/size/w600/2022/11/E.png 600w, ../content/images/size/w1000/2022/11/E.png 1000w, ../content/images/2022/11/E.png 1366w" sizes="(min-width: 720px) 720px"></figure><p><strong>Deploy Azure Container Registry(ACR)</strong>:</p><pre><code> az acr create --resource-group akshandsonlab --name pwnresistmhc --sku Standard --location eastus</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/F.png" class="kg-image" alt loading="lazy" width="1366" height="639" srcset="../content/images/size/w600/2022/11/F.png 600w, ../content/images/size/w1000/2022/11/F.png 1000w, ../content/images/2022/11/F.png 1366w" sizes="(min-width: 720px) 720px"></figure><p><em><strong>Authenticate with Azure Container Registry from Azure Kubernetes Service</strong> </em></p><pre><code>az aks update -n akspwnresist -g akshansonlab --attach-acr pwnresistmhc</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/G.png" class="kg-image" alt loading="lazy" width="1366" height="634" srcset="../content/images/size/w600/2022/11/G.png 600w, ../content/images/size/w1000/2022/11/G.png 1000w, ../content/images/2022/11/G.png 1366w" sizes="(min-width: 720px) 720px"></figure><p><em><strong>Create Azure SQL server and Database</strong>: </em></p><pre><code> az sql server create -l eastus -g akshandsonlab -n sqlsvrpwnresist -u sqladmin -p P2ssw0rd1234
+</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/H.png" class="kg-image" alt loading="lazy" width="1364" height="547" srcset="../content/images/size/w600/2022/11/H.png 600w, ../content/images/size/w1000/2022/11/H.png 1000w, ../content/images/2022/11/H.png 1364w" sizes="(min-width: 720px) 720px"></figure><p><strong><em>Create a database</em></strong></p><pre><code> az sql db create -g akshandsonlab -s sqlsvrpwnresist -n mhcdb --service-objective S0</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/I.png" class="kg-image" alt loading="lazy" width="1364" height="554" srcset="../content/images/size/w600/2022/11/I.png 600w, ../content/images/size/w1000/2022/11/I.png 1000w, ../content/images/2022/11/I.png 1364w" sizes="(min-width: 720px) 720px"></figure><p>The following components - <strong>Container Registry</strong>, <strong>Kubernetes Service</strong>, <strong>SQL Server</strong> along with <strong>SQL Database</strong> are deployed. Access each of these components individually and make a note of the details which will be used in Exercise 1.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/J.png" class="kg-image" alt loading="lazy" width="1357" height="631" srcset="../content/images/size/w600/2022/11/J.png 600w, ../content/images/size/w1000/2022/11/J.png 1000w, ../content/images/2022/11/J.png 1357w" sizes="(min-width: 720px) 720px"></figure><p>Select the <strong>mhcdb</strong> SQL database and make a note of the <strong>Server name</strong>.</p><p>Click on “Set server Firewall” and enable “Allow Azure services …” option.</p><p>Navigate to the resource group, select the created container registry and make a note of the <strong>Login server</strong> name.</p><h2 id="configure-build-pipeline"><strong>Configure Build pipeline</strong></h2><ol><li>Navigate to <strong>Pipelines –&gt; Pipelines</strong>.</li><li>Select <strong>MyHealth.AKS.Build</strong> pipeline and click <strong>Edit</strong>.</li></ol><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/L.png" class="kg-image" alt loading="lazy" width="1366" height="633" srcset="../content/images/size/w600/2022/11/L.png 600w, ../content/images/size/w1000/2022/11/L.png 1000w, ../content/images/2022/11/L.png 1366w" sizes="(min-width: 720px) 720px"></figure><p>In <strong>Run services</strong> task, select your Azure subscription from <strong>Azure subscription</strong> dropdown. Click <strong>Authorize</strong>.</p><p>Following the successful authentication, select appropriate values from the dropdown - <strong>Azure subscription</strong> and <strong>Azure Container Registry</strong> as shown.</p><p>Repeat this for the <strong>Build services, Push services</strong> and <strong>Lock services</strong> tasks in the pipeline.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/M.png" class="kg-image" alt loading="lazy" width="1360" height="633" srcset="../content/images/size/w600/2022/11/M.png 600w, ../content/images/size/w1000/2022/11/M.png 1000w, ../content/images/2022/11/M.png 1360w" sizes="(min-width: 720px) 720px"></figure><p><strong>applicationsettings.json</strong> file contains details of the database connection string used to connect to Azure database which was created in the beginning of this lab.</p><blockquote><strong>mhc-aks.yaml</strong> manifest file contains configuration details of <strong>deployments</strong>, <strong>services</strong> and <strong>pods</strong> which will be deployed in Azure Kubernetes Service. The manifest file will look like as below</blockquote><p>Click on the <strong>Variables</strong> tab.</p><p>Update <strong>ACR</strong> and <strong>SQLserver</strong> values for <strong>Pipeline Variables</strong> with the details noted earlier while configuring the environment.</p><p><strong>Save</strong> the changes.</p><h2 id="configure-build-pipeline-yamloptional"><strong> Configure Build pipeline (YAML) -Optional</strong></h2><p>We also have a YAML build pipeline if that’s something you’re interested in. To proceed through the YAML pipeline, choose <strong>MyHealth.AKS.Build-YAML</strong> and click <strong>Edit</strong>. If you utilize the YAML pipeline, make sure to update the <strong>MyHealth.AKS.Release</strong> release definition’s artifact link.</p><ol><li>Navigate to <strong>Pipelines –&gt; Pipelines</strong>.</li></ol><p>2. Select <strong>MyHealth.AKS.Build - YAML</strong> pipeline and click <strong>Edit</strong>.</p><p>3. In <strong>Run Services</strong> task, select <strong>settings</strong>. Select your <strong>Azure subscription</strong> from Azure subscription dropdown. Click <strong>Authorize</strong>.</p><p>4. Following the successful authentication, select appropriate values from the dropdown - <strong>Azure subscription</strong> and <strong>Azure Container Registry</strong> as shown and click <strong>Add</strong>.</p><p>Repeat this for the <strong>Build services</strong>, <strong>Push services</strong> and <strong>Lock services</strong> tasks in the pipeline.</p><p>5. Click on the <strong>Variables</strong> tab.</p><p>6. Update <strong>ACR</strong> and <strong>SQLserver</strong> values for Pipeline Variables with the details noted earlier while configuring the environment.</p><h2 id="configure-release-pipeline"><strong>Configure Release pipeline</strong></h2><ol><li>Navigate to <strong>Pipelines | Releases</strong>. Select <strong>MyHealth.AKS.Release</strong> pipeline and click <strong>Edit</strong>.</li></ol><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/P.png" class="kg-image" alt loading="lazy" width="1365" height="630" srcset="../content/images/size/w600/2022/11/P.png 600w, ../content/images/size/w1000/2022/11/P.png 1000w, ../content/images/2022/11/P.png 1365w" sizes="(min-width: 720px) 720px"></figure><p>2. Select Dev stage and click <strong>View stage tasks</strong> to view the pipeline tasks.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/O.png" class="kg-image" alt loading="lazy" width="1362" height="628" srcset="../content/images/size/w600/2022/11/O.png 600w, ../content/images/size/w1000/2022/11/O.png 1000w, ../content/images/2022/11/O.png 1362w" sizes="(min-width: 720px) 720px"></figure><p>3. In the <strong>Dev</strong> environment, under the <strong>DB deployment</strong> phase, select <strong>Azure Resource Manager</strong> from the drop down for <strong>Azure Service Connection Type</strong>, update the <strong>Azure Subscription</strong> value from the dropdown for <strong>Execute Azure SQL: DacpacTask</strong> task.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/P-1.png" class="kg-image" alt loading="lazy" width="1365" height="630" srcset="../content/images/size/w600/2022/11/P-1.png 600w, ../content/images/size/w1000/2022/11/P-1.png 1000w, ../content/images/2022/11/P-1.png 1365w" sizes="(min-width: 720px) 720px"></figure><p>4. In the <strong>AKS deployment</strong> phase, select <strong>Create Deployments &amp; Services in AKS</strong> task.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/Q.png" class="kg-image" alt loading="lazy" width="541" height="207"></figure><p>Update the <strong>Azure Subscription</strong>, <strong>Resource Group</strong> and <strong>Kubernetes cluster</strong> from the dropdown. Expand the <strong>Secrets</strong> section and update the parameters for <strong>Azure subscription</strong> and <strong>Azure container registry</strong> from the dropdown.</p><p>Repeat similar steps for <strong>Update image in AKS</strong> task.</p><p> Create Deployments &amp; Services in AKS will create the deployments and services in AKS as per the configuration specified in mhc-aks.yaml file. The Pod, for the first time will pull up the latest docker image.</p><p>Update image in AKS will pull up the appropriate image corresponding to the BuildID from the repository specified, and deploys the docker image to the mhc-front pod running in AKS.</p><p>A secret called mysecretkey is created in AKS cluster through Azure DevOps by using command kubectl create secret in the background. This secret will be used for authorization while pulling myhealth.web image from the Azure Container Registry.</p><p>5. Select the Variables section under the release definition, update ACR and SQLserver values for Pipeline Variables with the details noted earlier while configuring the environment. Select the Save button.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/image.png" class="kg-image" alt loading="lazy" width="946" height="335" srcset="../content/images/size/w600/2022/11/image.png 600w, ../content/images/2022/11/image.png 946w" sizes="(min-width: 720px) 720px"></figure><h2 id="trigger-a-build-and-deploy-application"><strong>Trigger a Build and deploy application</strong></h2><p>Let us trigger a build manually and upon completion, an automatic deployment of the application will be triggered. Our application is designed to be deployed in the pod with the <strong>load balancer</strong> in the front-end and <strong>Redis cache</strong> in the back-end.</p><ol><li>Select <strong>MyHealth.AKS.build</strong> pipeline. Click on <strong>Run pipeline</strong></li></ol><p>2. Once the build process starts, select the build job to see the build in progress.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/U.png" class="kg-image" alt loading="lazy" width="1366" height="635" srcset="../content/images/size/w600/2022/11/U.png 600w, ../content/images/size/w1000/2022/11/U.png 1000w, ../content/images/2022/11/U.png 1366w" sizes="(min-width: 720px) 720px"></figure><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/devsec.png" class="kg-image" alt loading="lazy" width="1361" height="634" srcset="../content/images/size/w600/2022/11/devsec.png 600w, ../content/images/size/w1000/2022/11/devsec.png 1000w, ../content/images/2022/11/devsec.png 1361w" sizes="(min-width: 720px) 720px"></figure><p>3. Switch back to the Azure DevOps portal. Select the <strong>Releases</strong> tab in the <strong>Pipelines</strong> section and double-click on the latest release. Select <strong>In progress</strong> link to see the live logs and release summary.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/devsec1.png" class="kg-image" alt loading="lazy" width="1366" height="631" srcset="../content/images/size/w600/2022/11/devsec1.png 600w, ../content/images/size/w1000/2022/11/devsec1.png 1000w, ../content/images/2022/11/devsec1.png 1366w" sizes="(min-width: 720px) 720px"></figure><p>Once the release is complete, launch the <a href="https://docs.microsoft.com/en-in/azure/cloud-shell/overview">Azure Cloud Shell</a> and run the below commands to see the pods running in AKS</p><p>a). Type <strong><code>az aks get-credentials --resource-group yourResourceGroup --name yourAKSname</code></strong> in the command prompt to get the access credentials for the Kubernetes cluster. Replace the variables <code>yourResourceGroup</code> and <code>yourAKSname</code> with the actual values.</p><p>b). <strong><code>kubectl get pods</code></strong></p><p>c). To access the application, run the below command. If you see that External-IP is pending, wait for sometime until an IP is assigned.</p><p><strong><code>kubectl get service mhc-front --watch</code></strong></p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/devsec2.png" class="kg-image" alt loading="lazy" width="1362" height="626" srcset="../content/images/size/w600/2022/11/devsec2.png 600w, ../content/images/size/w1000/2022/11/devsec2.png 1000w, ../content/images/2022/11/devsec2.png 1362w" sizes="(min-width: 720px) 720px"></figure><p>Copy the <strong>External-IP</strong> and paste it in the browser and press the Enter button to launch the application.</p><figure class="kg-card kg-image-card"><img src="../content/images/2022/11/output.png" class="kg-image" alt loading="lazy" width="1366" height="637" srcset="../content/images/size/w600/2022/11/output.png 600w, ../content/images/size/w1000/2022/11/output.png 1000w, ../content/images/2022/11/output.png 1366w" sizes="(min-width: 720px) 720px"></figure><h2 id="summary"><strong>Summary</strong></h2><p><a href="https://azure.microsoft.com/en-us/services/container-service/"><strong>Azure Kubernetes Service (AKS)</strong></a> reduces the complexity and operational overhead of managing a Kubernetes cluster by offloading much of that responsibility to the Azure. With <strong>Azure DevOps</strong> and <strong>Azure Container Services (AKS)</strong>, we can build DevOps for dockerized applications by leveraging docker capabilities enabled on Azure DevOps Hosted Agents.</p>
+    </section>
+
+
+</article>
+</main>
+
+
+
+
+
+    </div>
+
+    <footer class="site-footer outer">
+        <div class="inner">
+            <section class="copyright"><a href="../index.html">dueresist Tech Space</a> &copy; 2022</section>
+            <nav class="site-footer-nav">
+                
+            </nav>
+            <div><a href="https://ghost.org/" target="_blank" rel="noopener">Powered by Ghost</a></div>
+        </div>
+    </footer>
+
+</div>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous">
+</script>
+<script src="../assets/built/casper.js%3Fv=180df20899"></script>
+<script>
+$(document).ready(function () {
+    // Mobile Menu Trigger
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
+    // FitVids - Makes video embeds responsive
+    $(".gh-content").fitVids();
+});
+</script>
+
+
+
+</body>
+</html>
